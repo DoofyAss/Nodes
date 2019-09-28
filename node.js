@@ -63,12 +63,21 @@ var canvas = o('canvas');
 function Node(option) {
 	
 	Object.assign(this, {
-        x: 8,
-		y: 8,
-        w: 160,
-		h: 30,
-        r: 6
+		x: 16,
+		y: 16,
+		w: 160,
+		h: 64,
+		r: 8,				// radius [16, 8, 16, 8]
+		f: '#d8d4d0',		// fill
+		s: false			// shadow
     }, option);
+}
+
+
+
+Node.prototype.hover = function(x, y) {
+	return	(this.x < x) && (this.x + this.w > x) &&
+			(this.y < y) && (this.y + this.h > y);
 }
 
 
@@ -80,8 +89,12 @@ function View(canvas) {
 	
 	this.node = [];
 	
-	canvas.onclick = function() {
-		// console.log(view.node[0].w);
+	canvas.onmousemove = function(e) {
+		
+		view.node.each(function() {
+			this.s = this.hover(e.pageX, e.pageY) ? true : false;
+		});
+		
 		view.draw();
 	}
 }
@@ -92,8 +105,16 @@ View.prototype.draw = function() {
 	
 	this.context.clearRect(0, 0, canvas.width, canvas.height);
 	
-	this.node.each((n) => {
-		
+	this.node.each((node) => {
+		draw.rect(
+			node.x,
+			node.y,
+			node.w,
+			node.h,
+			node.r,
+			node.f,
+			node.s
+		);
 	});
 }
 
@@ -107,6 +128,8 @@ View.prototype.add = function(node) {
 
 var view = new View(canvas);
 view.add(new Node());
+view.add(new Node( { x: 256, y: 62, f: '#426c92' } ));
+view.add(new Node( { y: 112, f: '#33784c' } ));
 
 
 
@@ -121,3 +144,38 @@ view.add(new Node());
 	Render
 */
 
+var draw = {
+	
+	get context() { return view.context; },
+	
+	
+	
+	rect: function(x, y, w, h, r, f, s) {
+		
+		if (typeof r != 'object') r = typeof r == 'number' ? [r, r, r, r] : [0, 0, 0, 0];
+		
+		let c = this.context;
+		
+		c.fillStyle = f;
+		c.shadowBlur = 0;
+		
+		c.beginPath();
+		c.moveTo(x + r[0], y);
+		c.lineTo(x + w - r[1], y);
+		c.quadraticCurveTo(x + w, y, x + w, y + r[1]);
+		c.lineTo(x + w, y + h - r[2]);
+		c.quadraticCurveTo(x + w, y + h, x + w - r[2], y + h);
+		c.lineTo(x + r[3], y + h);
+		c.quadraticCurveTo(x, y + h, x, y + h - r[3]);
+		c.lineTo(x, y + r[0]);
+		c.quadraticCurveTo(x, y, x + r[0], y);
+		c.closePath();
+		
+		if (s) {
+			c.shadowColor = '#0000009d';
+			c.shadowBlur = 6;
+		}
+		
+		c.fill();
+	}
+}
