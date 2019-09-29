@@ -7,7 +7,36 @@
 	
 	<body>
 		<div id='list'></div>
-		<div id='area'><canvas></canvas></div>
+		<div id='area'>
+			<svg>
+			
+				<defs>
+				
+					<pattern id='gridSmall' width='8' height='8' patternUnits='userSpaceOnUse'>
+						<path d='M 8 0 L 0 0 0 8' fill='none' stroke='#00000016' stroke-width='0.5' />
+					</pattern>
+					
+					<pattern id='grid' x='-16' y='-16' width='32' height='32' patternUnits='userSpaceOnUse'>
+						<rect width='32' height='32' fill='url(#gridSmall)' />
+						<path d='M 32 0 L 0 0 0 32' fill='none' stroke='#00000032' stroke-width='0.5' />
+					</pattern>
+					
+					<filter id='shadow'>
+						<feDropShadow dx='0' dy='0' stdDeviation='4' flood-opacity='0.2' />
+					</filter>
+					
+				</defs>
+				
+				<rect width='100%' height='100%' fill='url(#grid)' cursor='default' />
+				
+				
+				
+				<!-- <svg x='32' y='32' width='176' height='80' > -->
+					<!-- <rect x='8' y='8' fill='#fefefe' width='160' height='64' rx='6' ry='6' filter='url(#shadow)' /> -->
+				<!-- </svg> -->
+				
+			</svg>
+		</div>
 	</body>
 	
 	<script src='node.js'></script>
