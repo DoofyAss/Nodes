@@ -1,22 +1,29 @@
-html { margin: 0; height: 100%; }
-body {
-	/* background: #f8f4f0; */
-	height: 100%;
+html, body {
 	margin: 0;
+	width: 100%;
+	height: 100%;
 	
 	display: flex;
-	align-items: center;
-	justify-content: center;
+}
+
+#list {
+	min-width: 256px;
+	height: 100%;
 }
 
 #area {
-	background: #ff0000;
+	display: flex;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
+	padding: 32px;
+	box-sizing: border-box;
 }
 
 canvas {
-	background: #f8f4f0;
-	/* margin-left: 32px; */
+	width: 100%;
+	height: 100%;
+	
+	background: #eef1f3;
+	border-radius: 6px;
 }

@@ -43,8 +43,8 @@ var area = o('#area');
 var canvas = o('canvas');
 
 (document.body.onresize = () => {
-	canvas.width = area.offsetWidth;
-	canvas.height = area.offsetHeight;
+	canvas.width = canvas.clientWidth; // area.clientWidth;
+	canvas.height = canvas.clientHeight; // area.clientHeight;
 })();
 
 
@@ -63,12 +63,12 @@ var canvas = o('canvas');
 function Node(option) {
 	
 	Object.assign(this, {
-		x: 16,
-		y: 16,
+		x: 116,
+		y: 116,
 		w: 160,
 		h: 64,
 		r: 8,				// radius [16, 8, 16, 8]
-		f: '#d8d4d0',		// fill
+		f: '#ffffff',		// fill
 		s: false			// shadow
     }, option);
 }
@@ -92,7 +92,7 @@ function View(canvas) {
 	canvas.onmousemove = function(e) {
 		
 		view.node.each(function() {
-			this.s = this.hover(e.pageX, e.pageY) ? true : false;
+			this.s = this.hover(e.layerX, e.layerY) ? true : false;
 		});
 		
 		view.draw();
@@ -128,8 +128,8 @@ View.prototype.add = function(node) {
 
 var view = new View(canvas);
 view.add(new Node());
-view.add(new Node( { x: 256, y: 62, f: '#426c92' } ));
-view.add(new Node( { y: 112, f: '#33784c' } ));
+view.add(new Node( { x: 356, y: 162, f: '#426c92' } ));
+view.add(new Node( { y: 212, f: '#33784c' } ));
 
 
 
