@@ -28,3 +28,14 @@ svg {
 	border-radius: 6px;
 }
 
+svg text {
+	font-family: Segoe UI;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.rhomb {
+	transform-origin: center;
+	transform: rotate(45deg);
+	transform-box: fill-box;
+}
